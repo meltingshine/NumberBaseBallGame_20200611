@@ -3,11 +3,18 @@ package com.example.numberbaseballgame_20200611
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.webkit.RenderProcessGoneDetail
+import android.widget.Toast
 import com.example.numberbaseballgame_20200611.adapters.ChatAdapter
 import com.example.numberbaseballgame_20200611.datas.Chat
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
+
+//     몇번 시도했는지 저장할 변수
+    var inputCount = 0
+
     // 컴퓨터가 낸 문제 숫자 3개를 저장할 ArrayList
     val computerNumbers = ArrayList<Int>() //배열 선언하는법..지금배ㅔ움...ㅅ발..
     val chatMessageList = ArrayList<Chat>() // 채팅 담는 배열
@@ -26,6 +33,15 @@ class MainActivity : BaseActivity() {
         okBtn.setOnClickListener {
 //사용자가 입력한 값을 String으로 우선 저장
             val inputNumStr = numberInputEdt.text.toString()
+
+            if(inputNumStr.length != 3) {
+                Toast.makeText(mContext,"숫자는 3자리여야되",Toast.LENGTH_SHORT).show()
+                //@으로 명확히 해줘야됨 정확히 return어디껀지 잡아줘야됨.
+
+                return@setOnClickListener
+            }
+
+
             val userChat = Chat("USER", inputNumStr)
 
 //            만든 채팅 메세지를 채팅 내역 배열에 추가
@@ -108,6 +124,8 @@ class MainActivity : BaseActivity() {
     //    ?S ?B인지 계산해서 리스트뷰에 답장 띄우기 기능 담당 함수
     fun checkStrikeandBall(inputNum: Int) {
 
+        inputCount++
+
 //    inputNum에는 세자리 숫자가 들어온다고 전제
 //    3자리 숫자를 3칸의 배열로 분리
         val inputNumArray = ArrayList<Int>()
@@ -121,10 +139,10 @@ class MainActivity : BaseActivity() {
         var strikeCount = 0
         var ballCount = 0
 
-        for(i in inputNumArray.indices){
-            for (j in computerNumbers.indices){
-                if(inputNumArray[i] == computerNumbers[j]){
-                    if(i == j){
+        for (i in inputNumArray.indices) {
+            for (j in computerNumbers.indices) {
+                if (inputNumArray[i] == computerNumbers[j]) {
+                    if (i == j) {
                         strikeCount++
                     } else {
                         ballCount++
@@ -133,15 +151,29 @@ class MainActivity : BaseActivity() {
             }
         }
 //        ?S ?B 인지 계산 끈났으니 채팅메세지로 보여줘야됨
-        val answer = Chat("CPU","${strikeCount}S ${ballCount}B 입니다")
+        val answer = Chat("CPU", "${strikeCount}S ${ballCount}B 입니다")
         chatMessageList.add(answer)
         mChatAdapter.notifyDataSetChanged()
-//        if (strikeCount == 3){
-
-//        }
+        if (strikeCount == 3) finishGame()
 
     }
 
+    fun finishGame() {
+
+//    몇번만에 맞혔는지
+//    끝났음녀 더이상 입력하지 못하도록함
+        numberInputEdt.isEnabled = false
+        numberInputEdt.visibility = View.GONE
+        okBtn.isEnabled = false
+        okBtn.visibility = View.GONE
+        val congMessage = Chat("CPU", "축하합니다 정답입니다")
+        chatMessageList.add(congMessage)
+        chatMessageList.add(Chat("CPU","${inputCount}번 만에 맞췄습니다!"))
+        mChatAdapter.notifyDataSetChanged()
+        Toast.makeText(mContext, "게임 끝!", Toast.LENGTH_LONG).show()
+
+//    종료 알림 토스트
+    }
 
 }
 
