@@ -26,7 +26,7 @@ class MainActivity : BaseActivity() {
         okBtn.setOnClickListener {
 //사용자가 입력한 값을 String으로 우선 저장
             val inputNumStr = numberInputEdt.text.toString()
-            val userChat = Chat("USER",inputNumStr)
+            val userChat = Chat("USER", inputNumStr)
 
 //            만든 채팅 메세지를 채팅 내역 배열에 추가
             chatMessageList.add(userChat)
@@ -37,6 +37,9 @@ class MainActivity : BaseActivity() {
 //            EditText에는 text=string이 안먹어서 setText로 사용
 
             numberInputEdt.setText("")
+
+//            썼던 번호를 String이어서 Int로 바꿔서 넣어줌
+            checkStrikeandBall(inputNumStr.toInt())
 
         }
 
@@ -101,6 +104,23 @@ class MainActivity : BaseActivity() {
         chatMessageList.add(Chat("CPU", "3자리 숫자 맞추기"))
         chatMessageList.add(Chat("CPU", "중복 없음, 1-9"))
     }
+
+    //    ?S ?B인지 계산해서 리스트뷰에 답장 띄우기 기능 담당 함수
+    fun checkStrikeandBall(inputNum: Int) {
+
+//    inputNum에는 세자리 숫자가 들어온다고 전제
+//    3자리 숫자를 3칸의 배열로 분리
+        val inputNumArray = ArrayList<Int>()
+
+//        100의자리, 10의자리, 1의자리 순서대로 대입
+        inputNumArray.add(inputNum / 100)
+        inputNumArray.add(inputNum / 10 % 10)
+        inputNumArray.add(inputNum % 10)
+        // %는 나머지 구하는 거
+
+
+    }
+
 
 }
 
