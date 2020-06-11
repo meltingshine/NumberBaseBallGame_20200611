@@ -72,9 +72,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        mChatAdapter = ChatAdapter(mContext, R.layout.chat_iist_item, chatMessageList)
 //    컴퓨터에게 문제를 내라고 시킴 => 문제는 3자리 숫자배열
         makeComputerNumber()
-        mChatAdapter = ChatAdapter(mContext, R.layout.chat_iist_item, chatMessageList)
         chatListView.adapter = mChatAdapter
     }
 
@@ -126,9 +126,19 @@ class MainActivity : BaseActivity() {
         }
 
 //        문제를 다 내고 안내 메세지를 채팅으로 출력
-        chatMessageList.add(Chat("CPU", "숫자 야구 게임에 오신 거슬 환영합니다"))
-        chatMessageList.add(Chat("CPU", "3자리 숫자 맞추기"))
-        chatMessageList.add(Chat("CPU", "중복 없음, 1-9"))
+        Handler().postDelayed({
+            chatMessageList.add(Chat("CPU", "숫자 야구 게임에 오신 거슬 환영합니다"))
+            mChatAdapter.notifyDataSetChanged()
+        },1000)
+        Handler().postDelayed({
+            chatMessageList.add(Chat("CPU", "3자리 숫자 맞추기"))
+            mChatAdapter.notifyDataSetChanged()
+        },2000)
+        Handler().postDelayed({
+            chatMessageList.add(Chat("CPU", "중복 없음, 1-9"))
+            mChatAdapter.notifyDataSetChanged()
+        },3000)
+
     }
 
     //    ?S ?B인지 계산해서 리스트뷰에 답장 띄우기 기능 담당 함수
@@ -176,7 +186,16 @@ class MainActivity : BaseActivity() {
 
             chatListView.smoothScrollToPosition(chatMessageList.size - 1)
 
-            if (strikeCount == 3) finishGame()
+            if (strikeCount == 3) {
+                Handler().postDelayed({
+                    finishGame()
+
+                },500)
+
+            }
+
+
+
         }, 1000)
 
 
