@@ -118,6 +118,27 @@ class MainActivity : BaseActivity() {
         inputNumArray.add(inputNum % 10)
         // %는 나머지 구하는 거
 
+        var strikeCount = 0
+        var ballCount = 0
+
+        for(i in inputNumArray.indices){
+            for (j in computerNumbers.indices){
+                if(inputNumArray[i] == computerNumbers[j]){
+                    if(i == j){
+                        strikeCount++
+                    } else {
+                        ballCount++
+                    }
+                }
+            }
+        }
+//        ?S ?B 인지 계산 끈났으니 채팅메세지로 보여줘야됨
+        val answer = Chat("CPU","${strikeCount}S ${ballCount}B 입니다")
+        chatMessageList.add(answer)
+        mChatAdapter.notifyDataSetChanged()
+//        if (strikeCount == 3){
+
+//        }
 
     }
 
