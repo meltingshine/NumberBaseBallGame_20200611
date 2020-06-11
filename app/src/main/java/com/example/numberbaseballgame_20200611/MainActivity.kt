@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
-//     몇번 시도했는지 저장할 변수
+    //     몇번 시도했는지 저장할 변수
     var inputCount = 0
 
     // 컴퓨터가 낸 문제 숫자 3개를 저장할 ArrayList
@@ -34,16 +34,16 @@ class MainActivity : BaseActivity() {
 //사용자가 입력한 값을 String으로 우선 저장
             val inputNumStr = numberInputEdt.text.toString()
 
-            if(inputNumStr.length != 3) {
-                Toast.makeText(mContext,"숫자는 3자리여야되",Toast.LENGTH_SHORT).show()
+            if (inputNumStr.length != 3) {
+                Toast.makeText(mContext, "숫자는 3자리여야되", Toast.LENGTH_SHORT).show()
                 //@으로 명확히 해줘야됨 정확히 return어디껀지 잡아줘야됨.
 
                 return@setOnClickListener
             }
 
-            if(inputNumStr.contains("0")){
+            if (inputNumStr.contains("0")) {
 
-                Toast.makeText(mContext,"0은 문제에 포함안돼 멍청아",Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, "0은 문제에 포함안돼 멍청아", Toast.LENGTH_SHORT).show()
                 //@으로 명확히 해줘야됨 정확히 return어디껀지 잡아줘야됨.
 
                 return@setOnClickListener
@@ -163,8 +163,10 @@ class MainActivity : BaseActivity() {
         mChatAdapter.notifyDataSetChanged()
 
 //        리스트뷰에 내용물이 추가되고나서 바닥으로 끌어내기
+        //
 
-        chatListView.smoothScrollToPosition(chatMessageList.size-1)
+
+        chatListView.smoothScrollToPosition(chatMessageList.size - 1)
 
         if (strikeCount == 3) finishGame()
 
@@ -180,7 +182,7 @@ class MainActivity : BaseActivity() {
         okBtn.visibility = View.GONE
         val congMessage = Chat("CPU", "축하합니다 정답입니다")
         chatMessageList.add(congMessage)
-        chatMessageList.add(Chat("CPU","${inputCount}번 만에 맞췄습니다!"))
+        chatMessageList.add(Chat("CPU", "${inputCount}번 만에 맞췄습니다!"))
         mChatAdapter.notifyDataSetChanged()
         Toast.makeText(mContext, "게임 끝!", Toast.LENGTH_LONG).show()
 
