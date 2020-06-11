@@ -67,6 +67,10 @@ class MainActivity : BaseActivity() {
 
         }
 
+
+        for (num in computerNumbers) {
+            Log.d("최종선별문제",num.toString())
+        }
     }
 
 }
