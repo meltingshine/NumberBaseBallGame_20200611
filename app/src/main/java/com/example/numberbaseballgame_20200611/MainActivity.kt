@@ -15,6 +15,9 @@ class MainActivity : BaseActivity() {
 
     //     몇번 시도했는지 저장할 변수
     var inputCount = 0
+    //중복 입력 막는 값
+    val tryNumberStringArr = ArrayList<String>()
+
 
     // 컴퓨터가 낸 문제 숫자 3개를 저장할 ArrayList
     val computerNumbers = ArrayList<Int>() //배열 선언하는법..지금배ㅔ움...ㅅ발..
@@ -49,6 +52,16 @@ class MainActivity : BaseActivity() {
 
                 return@setOnClickListener
             }
+
+            for (alreadyNumStr in tryNumberStringArr){
+
+                if(alreadyNumStr == inputNumStr) {
+                    Toast.makeText(mContext,"${inputNumStr}은 이미 시도해본 숫자입니다",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
+
+            tryNumberStringArr.add(inputNumStr)
 
             val userChat = Chat("USER", inputNumStr)
 
