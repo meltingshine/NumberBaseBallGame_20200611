@@ -3,10 +3,12 @@ package com.example.numberbaseballgame_20200611
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.numberbaseballgame_20200611.datas.Chat
 
 class MainActivity : BaseActivity() {
     // 컴퓨터가 낸 문제 숫자 3개를 저장할 ArrayList
     val computerNumbers = ArrayList<Int>() //배열 선언하는법..지금배ㅔ움...ㅅ발..
+    val chatMessageList = ArrayList<Chat>() // 채팅 담는 배열
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +73,11 @@ class MainActivity : BaseActivity() {
         for (num in computerNumbers) {
             Log.d("최종선별문제",num.toString())
         }
+
+//        문제를 다 내고 안내 메세지를 채팅으로 출력
+        chatMessageList.add(Chat("CPU","숫자 야구 게임에 오신 거슬 환영합니다"))
+        chatMessageList.add(Chat("CPU","3자리 숫자 맞추기"))
+        chatMessageList.add(Chat("CPU","중복 없음, 1-9"))
     }
 
 }
