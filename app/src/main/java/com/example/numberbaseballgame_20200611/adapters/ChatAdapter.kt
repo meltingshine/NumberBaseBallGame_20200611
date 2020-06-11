@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.example.numberbaseballgame_20200611.R
 import com.example.numberbaseballgame_20200611.datas.Chat
 import kotlinx.android.synthetic.main.activity_main.view.*
+import org.w3c.dom.Text
 
 class ChatAdapter(val mContext: Context, val resId: Int, val mList: List<Chat>) :
     ArrayAdapter<Chat>(mContext, resId, mList) {
@@ -28,6 +30,8 @@ class ChatAdapter(val mContext: Context, val resId: Int, val mList: List<Chat>) 
 //        컴퓨터가 말할때와 사람이 말할때 보여지는 레이아웃이 다르게 하려고함
         val computerChatLayout = row.findViewById<LinearLayout>(R.id.computerChatLayout)
         val userChatLayout = row.findViewById<LinearLayout>(R.id.userChatLayout)
+        val computerChatTxt = row.findViewById<TextView>(R.id.computerChatTxt)
+        val userChatTxt = row.findViewById<TextView>(R.id.userChatTxt)
 
 //        뿌려줄 채팅 데이터 확인
         val data = mList[position]
@@ -37,15 +41,18 @@ class ChatAdapter(val mContext: Context, val resId: Int, val mList: List<Chat>) 
 //          사람메시지는 보여주고 컴퓨터 메세지는 숨김
                 userChatLayout.visibility = View.VISIBLE
                 computerChatLayout.visibility = View.GONE
+                userChatTxt.text = data.content
             }
-            "CPU" ->{
+            "CPU" -> {
                 userChatLayout.visibility = View.GONE
                 computerChatLayout.visibility = View.VISIBLE
+                computerChatTxt.text = data.content  //data는 지금 List<Chat>임
+
 
             }
-    else -> {
-        Log.e("에러발생","사용자도 컴퓨터도 아닌 경우")
-    }
+            else -> {
+                Log.e("에러발생", "사용자도 컴퓨터도 아닌 경우")
+            }
         }
 
         return row
