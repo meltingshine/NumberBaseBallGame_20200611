@@ -161,6 +161,11 @@ class MainActivity : BaseActivity() {
         val answer = Chat("CPU", "${strikeCount}S ${ballCount}B 입니다")
         chatMessageList.add(answer)
         mChatAdapter.notifyDataSetChanged()
+
+//        리스트뷰에 내용물이 추가되고나서 바닥으로 끌어내기
+
+        chatListView.smoothScrollToPosition(chatMessageList.size-1)
+
         if (strikeCount == 3) finishGame()
 
     }
