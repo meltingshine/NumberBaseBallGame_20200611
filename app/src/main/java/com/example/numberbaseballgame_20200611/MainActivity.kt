@@ -34,6 +34,10 @@ class MainActivity : BaseActivity() {
             while (true) {
 //                TODO 1에서 9의 숫자를 랜덤으로 뽑음
 
+                //랜덤은 0<= x <1
+                //한다음에 .toInt() 하면 소수점 밑에 버려벌임
+                val randomNum = (Math.random()*9+1).toInt()
+
 
                 // 뽑은 숫자를 사용해도 될지를 저장하는 변수
                 var isNumberOk = true
