@@ -2,6 +2,7 @@ package com.example.numberbaseballgame_20200611
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.webkit.RenderProcessGoneDetail
@@ -53,8 +54,10 @@ class MainActivity : BaseActivity() {
 
 //            만든 채팅 메세지를 채팅 내역 배열에 추가
             chatMessageList.add(userChat)
+
 //            리스트뷰의 연결된 배열의 내용이 변하면 반드시 새로고침을 해주자
             mChatAdapter.notifyDataSetChanged()
+            chatListView.smoothScrollToPosition(chatMessageList.size -1)
 
 //            입력하고나면 edittext의 내용을 다시 빈칸으로
 //            EditText에는 text=string이 안먹어서 setText로 사용
@@ -133,42 +136,50 @@ class MainActivity : BaseActivity() {
 
         inputCount++
 
+        val answerDelayHandler = Handler()
+        answerDelayHandler.postDelayed({
+
 //    inputNum에는 세자리 숫자가 들어온다고 전제
 //    3자리 숫자를 3칸의 배열로 분리
-        val inputNumArray = ArrayList<Int>()
+            val inputNumArray = ArrayList<Int>()
 
 //        100의자리, 10의자리, 1의자리 순서대로 대입
-        inputNumArray.add(inputNum / 100)
-        inputNumArray.add(inputNum / 10 % 10)
-        inputNumArray.add(inputNum % 10)
-        // %는 나머지 구하는 거
+            inputNumArray.add(inputNum / 100)
+            inputNumArray.add(inputNum / 10 % 10)
+            inputNumArray.add(inputNum % 10)
+            // %는 나머지 구하는 거
 
-        var strikeCount = 0
-        var ballCount = 0
+            var strikeCount = 0
+            var ballCount = 0
 
-        for (i in inputNumArray.indices) {
-            for (j in computerNumbers.indices) {
-                if (inputNumArray[i] == computerNumbers[j]) {
-                    if (i == j) {
-                        strikeCount++
-                    } else {
-                        ballCount++
+            for (i in inputNumArray.indices) {
+                for (j in computerNumbers.indices) {
+                    if (inputNumArray[i] == computerNumbers[j]) {
+                        if (i == j) {
+                            strikeCount++
+                        } else {
+                            ballCount++
+                        }
                     }
                 }
             }
-        }
 //        ?S ?B 인지 계산 끈났으니 채팅메세지로 보여줘야됨
-        val answer = Chat("CPU", "${strikeCount}S ${ballCount}B 입니다")
-        chatMessageList.add(answer)
-        mChatAdapter.notifyDataSetChanged()
+            val answer = Chat("CPU", "${strikeCount}S ${ballCount}B 입니다")
+            chatMessageList.add(answer)
+
+
+            mChatAdapter.notifyDataSetChanged()
 
 //        리스트뷰에 내용물이 추가되고나서 바닥으로 끌어내기
-        //
+            //
 
 
-        chatListView.smoothScrollToPosition(chatMessageList.size - 1)
+            chatListView.smoothScrollToPosition(chatMessageList.size - 1)
 
-        if (strikeCount == 3) finishGame()
+            if (strikeCount == 3) finishGame()
+        }, 1000)
+
+
 
     }
 
