@@ -48,7 +48,7 @@ class MainActivity : BaseActivity() {
                 //중복이 아니어야 사용해도 좋은 숫자로 인정. (1-9는 위에서 셋함)
                 //중복 검사 : 문제 숫자 배열에 있는 값들을 다 꺼내서 지금 만든 값과 비교해봄
 
-                for(computerHadNumber in computerNumbers) {
+                for(computerHadNumber in computerNumbers) { //배열을 돌아다니는 문법임
 
 //                    같으면 중복임 사용하면 안됨
                     if (computerHadNumber == randomNum) {
@@ -59,7 +59,10 @@ class MainActivity : BaseActivity() {
                 }
 
                 //조건에 맞는 숫자를 뽑으면 무한 반복 끝내기
-                if (isNumberOk) {break}
+                if (isNumberOk) {
+                    computerNumbers.add(randomNum) //배열에 값 넣는 문법
+                    break
+                }
             }
 
         }
