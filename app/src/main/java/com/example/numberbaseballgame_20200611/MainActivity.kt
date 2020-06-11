@@ -41,6 +41,13 @@ class MainActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            if(inputNumStr.contains("0")){
+
+                Toast.makeText(mContext,"0은 문제에 포함안돼 멍청아",Toast.LENGTH_SHORT).show()
+                //@으로 명확히 해줘야됨 정확히 return어디껀지 잡아줘야됨.
+
+                return@setOnClickListener
+            }
 
             val userChat = Chat("USER", inputNumStr)
 
