@@ -12,7 +12,7 @@ class MainActivity : BaseActivity() {
     val computerNumbers = ArrayList<Int>() //배열 선언하는법..지금배ㅔ움...ㅅ발..
     val chatMessageList = ArrayList<Chat>() // 채팅 담는 배열
 
-    lateinit var mChatAdapter : ChatAdapter
+    lateinit var mChatAdapter: ChatAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +23,29 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        okBtn.setOnClickListener {
+//사용자가 입력한 값을 String으로 우선 저장
+            val inputNumStr = numberInputEdt.text.toString()
+            val userChat = Chat("USER",inputNumStr)
+
+//            만든 채팅 메세지를 채팅 내역 배열에 추가
+            chatMessageList.add(userChat)
+//            리스트뷰의 연결된 배열의 내용이 변하면 반드시 새로고침을 해주자
+            mChatAdapter.notifyDataSetChanged()
+
+//            입력하고나면 edittext의 내용을 다시 빈칸으로
+//            EditText에는 text=string이 안먹어서 setText로 사용
+
+            numberInputEdt.setText("")
+
+        }
+
     }
 
     override fun setValues() {
 //    컴퓨터에게 문제를 내라고 시킴 => 문제는 3자리 숫자배열
         makeComputerNumber()
-        mChatAdapter = ChatAdapter(mContext,R.layout.chat_iist_item,chatMessageList)
+        mChatAdapter = ChatAdapter(mContext, R.layout.chat_iist_item, chatMessageList)
         chatListView.adapter = mChatAdapter
     }
 
@@ -44,9 +61,9 @@ class MainActivity : BaseActivity() {
 
                 //랜덤은 0<= x <1
                 //한다음에 .toInt() 하면 소수점 밑에 버려벌임
-                val randomNum = (Math.random()*9+1).toInt()
+                val randomNum = (Math.random() * 9 + 1).toInt()
 
-                Log.d("랜덤값",randomNum.toString())
+                Log.d("랜덤값", randomNum.toString())
 
 
                 // 뽑은 숫자를 사용해도 될지를 저장하는 변수
@@ -55,7 +72,7 @@ class MainActivity : BaseActivity() {
                 //중복이 아니어야 사용해도 좋은 숫자로 인정. (1-9는 위에서 셋함)
                 //중복 검사 : 문제 숫자 배열에 있는 값들을 다 꺼내서 지금 만든 값과 비교해봄
 
-                for(computerHadNumber in computerNumbers) { //배열을 돌아다니는 문법임
+                for (computerHadNumber in computerNumbers) { //배열을 돌아다니는 문법임
 
 //                    같으면 중복임 사용하면 안됨
                     if (computerHadNumber == randomNum) {
@@ -76,13 +93,13 @@ class MainActivity : BaseActivity() {
 
 
         for (num in computerNumbers) {
-            Log.d("최종선별문제",num.toString())
+            Log.d("최종선별문제", num.toString())
         }
 
 //        문제를 다 내고 안내 메세지를 채팅으로 출력
-        chatMessageList.add(Chat("CPU","숫자 야구 게임에 오신 거슬 환영합니다"))
-        chatMessageList.add(Chat("CPU","3자리 숫자 맞추기"))
-        chatMessageList.add(Chat("CPU","중복 없음, 1-9"))
+        chatMessageList.add(Chat("CPU", "숫자 야구 게임에 오신 거슬 환영합니다"))
+        chatMessageList.add(Chat("CPU", "3자리 숫자 맞추기"))
+        chatMessageList.add(Chat("CPU", "중복 없음, 1-9"))
     }
 
 }
